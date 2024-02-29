@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,11 +24,15 @@ export default function RootLayout({
               <h1 className='text-white text-2xl font-bold'>Tracking System</h1>
               <ul className='mt-4 space-y-2'>
                 <li>
-                  <a href='#' className='text-white'>Dashboard</a>
+                  <Link href='/' className='text-white'>Dashboard</Link>
                 </li>
                 <li>
-                  <a href='#' className='text-white'>Users</a>
+                  <Link href='/projects/' className='text-white'>Projects</Link>
                 </li>
+                <li>
+                  <Link href='/users' className='text-white'>Users</Link>
+                </li>
+                
               </ul>
             </nav>
           </aside>
@@ -35,11 +40,11 @@ export default function RootLayout({
             <nav className='p-4 bg-gray-100 h-14 border-b'>
 
             </nav>
-            <div className='grow'>
+            <div className='grow overflow-y-scroll'>
               {children}
             </div>
             
-            <footer className='p-4 bg-gray-100 border-t h-11'>
+            <footer className='px-4 py-3 bg-gray-100 border-t shadow-slate-200'>
               All right reserved
             </footer>
           </div>
