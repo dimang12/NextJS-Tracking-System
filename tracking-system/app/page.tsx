@@ -1,8 +1,11 @@
 
 import Link from 'next/link'
 import ProductCard from './components/ProductCard'
+import { getServerSession } from 'next-auth'
+import { authProvider } from './api/auth/[...nextauth]/route'
 
-export default function Home() {
+export default async function Home() {
+  const session = await getServerSession(authProvider)
   return (
     <main className='p-3'>
       <h1>Welcome to the Tracking System</h1>

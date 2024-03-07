@@ -1,24 +1,47 @@
 import React from 'react';
 import User from '../interfaces/User';
+import Link from 'next/link';
+import {sort} from 'fast-sort';
 
-const UserList = async () => {
+
+// create a new interface to define the props
+interface Props {
+        sortOrder: string,
+        order: string
+}
+
+const UserList = async ({sortOrder, order}: Props) => {
     const res = await fetch(
         'https://jsonplaceholder.typicode.com/users',
         // {next: {revalidate: 10}} // this will tell next.js to revalidate the data every 10 seconds
         )
-      const users: User[] = await res.json()
+    let users: User[] = await res.json()
+    const ascDesc = order === 'asc' ? 'desc' : 'asc'
+
+    // sort the users
+    if(sortOrder !== undefined && sortOrder !== '') {
+        if(order === 'asc') {
+            users = sort(users).asc((user: User) => user[sortOrder as keyof User])
+        } else {
+            users = sort(users).desc((user: User) => user[sortOrder as keyof User])
+        }
+    }
 
     return (
         <div className='p-4'>
-            <table className="min-w-full divide-y divide-gray-300">
+            <table className="table table-bordered">
                 <thead>
                     <tr>
                         <th className='text-center'>
                             <input type="checkbox" />
                         </th>
                         <th className='py-3 text-left'>ID</th>
-                        <th className='text-left'>Name</th>
-                        <th className='text-left'>Email</th>
+                        <th className='text-left'>
+                            <Link href={'/users?sortOrder=name&order=' + ascDesc} >Name</Link>
+                        </th>
+                        <th className='text-left'>
+                            <Link href={'/users?sortOrder=email&order=' + ascDesc}>Email</Link>
+                        </th>
                         <th className='text-left'>Username</th>
                     </tr>
                 </thead>

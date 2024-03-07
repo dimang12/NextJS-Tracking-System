@@ -15,7 +15,7 @@ const ProductCard: React.FC = () => {
                 <button className="btn btn-accent"
                     onClick={handleClick}>Click me</button>
             </div>
-            
+
         </div>
     );
 };

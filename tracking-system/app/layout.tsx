@@ -1,7 +1,12 @@
 import './globals.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Link from 'next/link'
+
+import AuthProvider  from './../app/auth/Provider'
+import LeftBar from './components/layouts/LeftBar'
+import LayoutFooter from './components/layouts/Footer'
+import TopBar from './components/layouts/TopBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,37 +23,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex h-screen">
-          <aside className='w-72 bg-indigo-700'>
-            <nav className='p-4'>
-              <h1 className='text-white text-2xl font-bold'>Tracking System</h1>
-              <ul className='mt-4 space-y-2'>
-                <li>
-                  <Link href='/' className='text-white'>Dashboard</Link>
-                </li>
-                <li>
-                  <Link href='/projects/' className='text-white'>Projects</Link>
-                </li>
-                <li>
-                  <Link href='/users' className='text-white'>Users</Link>
-                </li>
-                
-              </ul>
-            </nav>
-          </aside>
-          <div className='grow flex flex-col h-screen'>
-            <nav className='p-4 bg-gray-100 h-14 border-b'>
-
-            </nav>
-            <div className='grow overflow-y-scroll'>
-              {children}
+        <AuthProvider>
+          <main className="flex h-screen">
+            <LeftBar />
+            <div className='grow flex flex-col h-screen'>
+              <TopBar />
+              <div className='grow overflow-y-scrol bg-slate-100'>
+                {children}
+              </div>
+              <LayoutFooter />
             </div>
-            
-            <footer className='px-4 py-3 bg-gray-100 border-t shadow-slate-200'>
-              All right reserved
-            </footer>
-          </div>
-        </main>
+          </main>
+        </AuthProvider>
       </body>
     </html>
   )
